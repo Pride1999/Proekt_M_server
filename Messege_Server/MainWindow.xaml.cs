@@ -33,7 +33,6 @@ namespace Messege_Server
         public MainWindow()
         {
             InitializeComponent();
-        
         }
 
             private void Server_start_stop_Click(object sender, RoutedEventArgs e)
@@ -86,7 +85,12 @@ namespace Messege_Server
 
             while (true)
             {
-                
+                if (SS.X() == "Stop_Server")
+                {
+                    Dispatcher.BeginInvoke((Action)(() => Server_start_stop.IsEnabled = true));
+                    break;
+                }
+
                 Byte[] data = client.Receive(ref localEp);
                 formatted_data = Encoding.UTF8.GetString(data);
                 Dispatcher.BeginInvoke((Action)(() => this.TextB1.Text += formatted_data + "\r\n"));
@@ -95,45 +99,7 @@ namespace Messege_Server
             }
 
 
-            //const int PORT_NO = 27015;
-            //const string SERVER_IP = "127.0.0.1";
-            //string BekLine = null;
-            //IPAddress localAdd = IPAddress.Parse(SERVER_IP);
-            //TcpListener listener = new TcpListener(localAdd, PORT_NO);
-            //while (true)
-            //{
-
-            //    if (SS.X() == "Stop_Server")
-            //    {
-            //        Dispatcher.BeginInvoke((Action)(() => Server_start_stop.IsEnabled = true));
-            //        break;
-            //    }
-            //    listener.Start();
-            //    Dispatcher.BeginInvoke((Action)(() => this.TextB1.Text += "listener\r\n"));
-            //    TcpClient client = listener.AcceptTcpClient();
-            //    NetworkStream nwStream = client.GetStream();
-
-            //    byte[] buffer = new byte[client.ReceiveBufferSize];
-            //    int bytesRead = nwStream.Read(buffer, 0, client.ReceiveBufferSize);
-            //    string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-            //   // Console.WriteLine("Received : " + dataReceived);
-            //    Dispatcher.BeginInvoke((Action)(() => this.TextB1.Text += "Received:"+dataReceived+"\r\n"));
-
-            //    BekLine = "  ------- ";
-            //    //BekLine += Db.print_users();
-            //    //MessageBox.Show(Db.print_users());
-
-            //    Dispatcher.BeginInvoke((Action)(() => this.TextB1.Text += "Sending back :" + BekLine +"\r\n"));
-
-            //    //Console.WriteLine("Sending back : " + BekLine);
-
-            //    byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(BekLine);
-
-            //    nwStream.Write(bytesToSend, 0, bytesToSend.Length);
-            //    client.Close();
-            //    listener.Stop();
-            //    // Console.ReadLine();
-            //}
+        
 
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -144,19 +110,19 @@ namespace Messege_Server
         private void Test_B_Click(object sender, RoutedEventArgs e)
         {
             TextB1.Text += "Table Users \r\n";
-            TextB1.Text += Db.print_users();
+            TextB1.Text += Db.print_users(0);
             Db.add_users("log","pass","name","tel",2);
             TextB1.Text += "ADD Users \r\n";
-            TextB1.Text += Db.print_users();
+            TextB1.Text += Db.print_users(0);
             Db.update_users(2,"XX","","","",-1);
             Db.update_users(2,"","DD","","",-1);
             Db.update_users(2,"","","FF","",-1);
             Db.update_users(2,"","","","TT",1);
             TextB1.Text += "Upd Users \r\n";
-            TextB1.Text += Db.print_users();
+            TextB1.Text += Db.print_users(0);
             Db.del_users( 2);
             TextB1.Text += "Del Users \r\n";
-            TextB1.Text += Db.print_users();
+            TextB1.Text += Db.print_users(0);
             TextB1.Text += " \r\n";
 
         }

@@ -17,17 +17,25 @@ namespace Messege_Server
     class Work_DB
     {
         String fileName = @"Server_Messeger.db";
+        Messege_Out mes_out = new Messege_Out();
         //private SQLiteConnection sql_con;
         //private SQLiteCommand sql_cmd;
         //private SQLiteDataAdapter DB;
         //private SQLiteDataReader DR;
 
 
-        public string print_users()
+        public string print_users(int kod)
         {
+            string kol = "";
+            if (kod == 1)
+            {
+                kol = " ";
+            }
+            else
+            {
+                kol = " * ";
+            }
             string UserS = "";
-
-
             SQLiteConnection db = new SQLiteConnection();
             try
             {
@@ -36,26 +44,16 @@ namespace Messege_Server
                 try
                 {
                     SQLiteCommand cmdSelect = db.CreateCommand();
-                    cmdSelect.CommandText = "SELECT * FROM Users;";
+                    cmdSelect.CommandText = "SELECT "+kol+" FROM Users;";
 
                     SQLiteDataReader reader = cmdSelect.ExecuteReader();
                     StringBuilder sb = new StringBuilder();
-                    //for (int colCtr = 0; colCtr < reader.FieldCount; ++colCtr)
-                    //{
-                    //    // Add Seperator (If After First Column)
-                    //    if (colCtr > 0) sb.Append("|");
 
-                    //    // Add Column Name
-                    //    sb.Append(reader.GetName(colCtr));
-                    //}
                     while (reader.Read())
                     {
                         for (int colCtr = 0; colCtr < reader.FieldCount; ++colCtr)
                         {
-                            // Add Seperator (If After First Column)
                             if (colCtr > 0) sb.Append("█");
-
-                            // Add Column Text
                             sb.Append(reader.GetValue(colCtr).ToString());
                         }
                         sb.AppendLine();
@@ -69,18 +67,21 @@ namespace Messege_Server
                 }
 
                 db.Close();
+
             }
             finally
             {
                 // delete(IDisposable )db;
             }
+            mes_out.Messeges(UserS, 1);
             return UserS;
         }
-        private void SQL_command(string Qvery, string Table, bool Reset_AvtoIncr)
+        private void SQL_command(string Qvery, string Table, bool Reset_AvtoIncr)// comand sent in database
         {
             SQLiteConnection db = new SQLiteConnection();
             try
-            {
+            { 
+
                 db.ConnectionString = "Data Source=\"" + fileName + "\"";
                 db.Open();
                 try
@@ -91,7 +92,7 @@ namespace Messege_Server
                         cmdInsertValue.CommandText = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='"+ Table + "';";
                         cmdInsertValue.ExecuteNonQuery();
                     }
-
+                    
                     cmdInsertValue.CommandText = Qvery;
                     cmdInsertValue.ExecuteNonQuery();
                 }
@@ -174,16 +175,16 @@ namespace Messege_Server
         }
 
 
-        public class Users
-        {
-            public int id { get; set; }
-            public string login { get; set; }
-            public string password { get; set; }
-            public string name { get; set; }
-            public string tel { get; set; }
-            public int status { get; set; }
+        //public class Users
+        //{
+        //    public int id { get; set; }
+        //    public string login { get; set; }
+        //    public string password { get; set; }
+        //    public string name { get; set; }
+        //    public string tel { get; set; }
+        //    public int status { get; set; }
 
-        }
+        //}
 
         // Open database (or create if not exits)
 

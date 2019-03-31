@@ -10,6 +10,7 @@ namespace Messege_Server
     {
         private string Messege;
         private string Mes_Kod;
+        Work_DB Db_W = new Work_DB();
 
         Listen_Mes()
         {           
@@ -17,6 +18,8 @@ namespace Messege_Server
         private void Start (string Mes)
         {
             this.Messege = Mes;
+
+
         }
         private string Messeg_text(string Mes)
         {
@@ -34,14 +37,17 @@ namespace Messege_Server
             string Text_M = Messeg_text(this.Messege);
             if (this.Mes_Kod == "01")
             {
-
-            }else if (this.Mes_Kod == "02")
+                Db_W.print_users(0);
+            }
+            else
+            if (this.Mes_Kod == "02")
             {
                
             }
             
             
         }
+
 
     }
 }
