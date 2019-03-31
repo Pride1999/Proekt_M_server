@@ -1,0 +1,17 @@
+﻿<Window x:Class="Messege_Server.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Messege_Server"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Closing="Window_Closing">
+   
+    <Grid>
+        
+        <Button x:Name="Server_start_stop" Content="Start" Margin="0,0,682,369" HorizontalAlignment="Right" Width="100" Height="40" VerticalAlignment="Bottom" Click="Server_start_stop_Click"></Button>
+        <TextBox x:Name="TextB1"  Margin="0,0,10,10" HorizontalAlignment="Right" Width="772" Height="354" VerticalAlignment="Bottom" VerticalScrollBarVisibility="Auto" ></TextBox>
+        <Button x:Name="Test_B" Content="Test" Margin="0,0,10,369" HorizontalAlignment="Right" Width="100" Height="40" VerticalAlignment="Bottom" Click="Test_B_Click" />
+
+    </Grid>
+</Window>
